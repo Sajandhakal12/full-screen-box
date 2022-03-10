@@ -1,16 +1,190 @@
+:root {
+  --width-size: 100vw;
+  --height-size: 100vh;
+  --half-width-size: calc(var(--width-size) / 2);
+  --half-height-size: calc(var(--height-size) / 2);
+  --negative-half-width-size: calc(var(--width-size) * -1/2);
+  --negative-half-height-size: calc(var(--height-size) * -1/2);
+}
+
 html,
 body {
+  overflow: hidden;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 * {
   box-sizing: border-box;
+}
+
+
+.scene {
+  width: var(--width-size);
+  height: var(--height-size);
+  perspective: calc(var(--height-size) + var(--width-size));
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.box.show-front {
+  transform: translateZ(var(--negative-half-width-size)) rotateY(0deg);
+}
+
+.box.show-back {
+  transform: translateZ(var(--negative-half-width-size)) rotateY(-180deg);
+}
+
+.box.show-right {
+  transform: translateZ(var(--negative-half-width-size)) rotateY(-90deg);
+}
+
+.box.show-left {
+  transform: translateZ(var(--negative-half-width-size)) rotateY(90deg);
+}
+
+.box.show-top {
+  transform: translateZ(var(--negative-half-height-size)) rotateX(-90deg);
+}
+
+.box.show-bottom {
+  transform: translateZ(var(--negative-half-height-size)) rotateX(90deg);
+}
+
+.box.show-bottom>.box__face--right {
+  width: var(--height-size);
+  transform: rotateY(90deg) translateZ(calc(var(--half-width-size) + var(--half-width-size) - var(--half-height-size)));
+}
+
+.box.show-bottom>.box__face--front {
+  transform: rotateY(0deg) translateZ(calc(var(--half-height-size)));
+}
+
+.box.show-bottom>.box__face--back {
+  transform: rotateY(0deg) translateZ(calc(var(--half-height-size)));
+}
+
+.box.show-top>.box__face--front {
+  transform: rotateY(0deg) translateZ(calc(var(--half-height-size)));
+}
+
+.box.show-top>.box__face--back {
+  transform: rotateY(0deg) translateZ(calc(var(--half-height-size)));
+}
+
+.box.show-top>.box__face--right {
+  width: var(--height-size);
+  transform: rotateY(90deg) translateZ(calc(var(--half-width-size) + var(--half-width-size) - var(--half-height-size)))
+}
+
+.box.show-bottom>.box__face--left {
+  width: var(--height-size);
+  transform: rotateY(-90deg) translateZ(var(--half-height-size));
+}
+
+.box.show-top>.box__face--left {
+  width: var(--height-size);
+  transform: rotateY(-90deg) translateZ(var(--half-height-size))
+}
+
+.box.show-front>.box__face--top,
+.box.show-back>.box__face--top,
+.box.show-right>.box__face--top,
+.box.show-left>.box__face--top {
+  height: var(--width-size);
+  transform: rotateX(90deg) translateZ(var(--half-width-size));
+}
+
+.box.show-front>.box__face--bottom,
+.box.show-back>.box__face--bottom, 
+.box.show-right>.box__face--bottom, 
+.box.show-left>.box__face--bottom{
+  height: var(--width-size);
+  transform: rotateX(-90deg) translateZ(calc(var(--height-size) - var(--half-width-size)));
+}
+
+
+
+
+
+.box__face {
+  position: absolute;
+  /* border: 2px solid black; */
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.box__face--front,
+.box__face--back {
+  width: var(--width-size);
+  height: var(--height-size);
+  line-height: 200px;
+}
+
+.box__face--right,
+.box__face--left {
+  width: var(--width-size);
+  height: var(--height-size);
+  line-height: 200px;
+}
+
+.box__face--top,
+.box__face--bottom {
+  width: var(--width-size);
+  height: var(--height-size);
+  /* top: 50vh; */
+  line-height: 100px;
+}
+
+.box__face--front {
+  background: hsla(0, 100%, 50%, 0.7);
+  transform: rotateY(0deg) translateZ(var(--half-width-size));
+}
+
+.box__face--back {
+  background: hsla(120, 100%, 50%, 0.7);
+  transform: rotateY(180deg) translateZ(var(--half-width-size));
+}
+
+.box__face--right {
+  background: hsla(60, 100%, 50%, 0.7);
+  transform: rotateY(90deg) translateZ(var(--half-width-size));
+}
+
+.box__face--left {
+  background: hsla(180, 100%, 50%, 0.7);
+  transform: rotateY(-90deg) translateZ(var(--half-width-size));
+}
+
+.box__face--top {
+  background: hsla(240, 100%, 50%, 0.7);
+  transform: rotateX(90deg) translateZ(var(--half-height-size));
+}
+
+.box__face--bottom {
+  background: hsla(300, 100%, 50%, 0.7);
+  transform: rotateX(-90deg) translateZ(var(--half-height-size));
+}
+
+label {
+  margin-right: 10px;
+}
+
+.radio-group{
+  position: absolute;
+  top: 0;
+  z-index: 2;
 }
